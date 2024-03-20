@@ -10,32 +10,77 @@ int randomRango(int min, int max);
 void cargaPilaRandom(Pila* p);
 void cargaPilaRandom1(Pila* p, int cant);
 void cargaPilaRandomRango(Pila* p, int cant, int min, int max);
+void muestraMenu();
+void menu();
+int ingresoDato();
 
 int main()
 {
-    int algo;
-    printf("\n Probando var sin inicializar %d", algo);
-
-    Pila temperatuas;
-    inicpila(&temperatuas);
-
-    Pila tempLondon;
-    inicpila(&tempLondon);
-
-    cargaPilaRandomRango(&temperatuas, 6, -10, 35);
-    cargaPila(&temperatuas);
-
-    printf("\n Muestra Temperaturas \n");
-    muestraPila(temperatuas);
-
-    cargaPilaRandom1(&tempLondon, 3);
-
-    printf("\n Muestra Temperaturas de Londres \n");
-    muestraPila(tempLondon);
-
+    menu();
 
     return 0;
 }
+
+void muestraMenu(){
+    printf("\n\t\t Menu de opciones de funciones de pila\n\n");
+    printf("\n 1 - Carga Pila Random");
+    printf("\n 2 - Carga Pila con intervencion del usuario");
+    printf("\n 3 - Muestra pila");
+    printf("\n 4 - Busca un dato en la pila");
+    printf("\n 5 - Cuenta elementos de una pila");
+    printf("\n 6 - Suma los elementos de una pila");
+    printf("\n 7 - Busca el menor elemento de una pila");
+    printf("\n 8 - Muestra tabla ASCII");
+
+    printf("\n\n\n");
+    printf("ESC para salir o cualquier tecla para continuar");
+}
+
+void menu(){
+    char opcion;
+    int existe;
+    int dato;
+    Pila temperaturas;
+    inicpila(&temperaturas);
+
+    do{
+        system("cls");
+        muestraMenu();
+
+        opcion = getch();
+
+        switch(opcion){
+            case 49:
+                cargaPilaRandomRango(&temperaturas, 20, -5, 25);
+                break;
+            case 50:
+                cargaPila(&temperaturas);
+                break;
+            case 51:
+                if(!pilavacia(&temperaturas)){
+                    muestraPila(temperaturas);
+                }else{
+                    printf("\n La pila esta vacia");
+                }
+            case 52:
+                dato = ingresoDato();
+                existe = buscaElementoEnPila(temperaturas, dato);
+                if(existe){  /// if(existe == 1)
+                    printf("\n El dato %d existe en la pila", dato);
+                }else{
+                    printf("\n El dato %d NO existe en la pila", dato);
+                }
+                break;
+            case 53:
+                break;
+            case 56:
+                muestraTablaAscii();
+        }
+        system("pause");
+    }while(opcion!=27);
+
+}
+
 
 void cargaPila(Pila* p)
 {
@@ -146,4 +191,18 @@ int buscaElementoEnPila(Pila p, int dato){
     }
 
     return flag;
+}
+
+int ingresoDato(){
+    int dato;
+    printf("\n Ingrese el dato a buscar: ");
+    scanf("%d", &dato);
+    return dato;
+}
+
+void muestraTablaAscii(){
+    printf("\n\t\t Tabla ASCII de caracteres");
+    for(int i=0; i<257; i++){
+        printf("\n Codigo: %d - %c",i,i);
+    }
 }
