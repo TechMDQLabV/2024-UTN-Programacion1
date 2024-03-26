@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
-
+#include <time.h>
 #include "pila.h"
 
 void cargaPila(Pila* p);
@@ -12,6 +12,9 @@ void cargaPilaRandom1(Pila* p, int cant);
 void cargaPilaRandomRango(Pila* p, int cant, int min, int max);
 int buscaElementoEnPila(Pila p, int dato);
 int eliminaMenorElementoPila(Pila* p);
+void ordenaPilaPorSeleccion(Pila* origen, Pila* ordenada);
+void insertarEnPilaOrdenada(Pila* p, int dato);
+void ordenaPilaPorInsercion(Pila* desordenada, Pila* ordenada);
 void muestraMenu();
 void menu();
 int ingresoDato();
@@ -19,6 +22,7 @@ void muestraTablaAscii();
 
 int main()
 {
+    srand(time(NULL));
     menu();
 
     return 0;
@@ -33,7 +37,8 @@ void muestraMenu(){
     printf("\n 5 - Cuenta elementos de una pila");
     printf("\n 6 - Suma los elementos de una pila");
     printf("\n 7 - Busca el menor elemento de una pila");
-    printf("\n 8 - Muestra tabla ASCII");
+    printf("\n 8 - Ordena por insercion");
+    printf("\n 9 - Muestra tabla ASCII");
 
     printf("\n\n\n");
     printf("ESC para salir o cualquier tecla para continuar");
@@ -46,8 +51,12 @@ void menu(){
     int cont;
     int total;
     int menor;
+    Pila origen;
+    Pila destino;
     Pila temperaturas;
     inicpila(&temperaturas);
+    inicpila(&origen);
+    inicpila(&destino);
 
     do{
         system("cls");
@@ -95,6 +104,14 @@ void menu(){
                     printf("\nEl menor elemento de la pila es: %d", menor);
                 break;
             case 56:
+                pasaPila(&temperaturas, &origen);
+                printf("\nPila origen antes de ordenar\n");
+                muestraPila(origen);
+                ordenaPilaPorInsercion(&origen, &destino);
+                printf("\nPila origen despues de ordenar\n");
+                muestraPila(destino);
+                break;
+            case 57:
                 muestraTablaAscii();
         }
         printf("\n");
@@ -249,9 +266,25 @@ int eliminaMenorElementoPila(Pila* p){
 }
 
 void ordenaPilaPorSeleccion(Pila* origen, Pila* ordenada){
-    int algo=0;
     while(!pilavacia(origen)){
         apilar(ordenada, eliminaMenorElementoPila(origen));
+    }
+}
+
+void insertarEnPilaOrdenada(Pila* p, int dato){
+    Pila aux;
+    inicpila(&aux);
+
+    while(!pilavacia(p) && dato<tope(p)){
+        apilar(&aux, desapilar(p));
+    }
+    apilar(p, dato);
+    pasaPila(&aux, p);
+}
+
+void ordenaPilaPorInsercion(Pila* desordenada, Pila* ordenada){
+    while(!pilavacia(desordenada)){
+        insertarEnPilaOrdenada(ordenada, desapilar(desordenada));
     }
 }
 
