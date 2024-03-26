@@ -10,9 +10,12 @@ int randomRango(int min, int max);
 void cargaPilaRandom(Pila* p);
 void cargaPilaRandom1(Pila* p, int cant);
 void cargaPilaRandomRango(Pila* p, int cant, int min, int max);
+int buscaElementoEnPila(Pila p, int dato);
+int eliminaMenorElementoPila(Pila* p);
 void muestraMenu();
 void menu();
 int ingresoDato();
+void muestraTablaAscii();
 
 int main()
 {
@@ -40,6 +43,9 @@ void menu(){
     char opcion;
     int existe;
     int dato;
+    int cont;
+    int total;
+    int menor;
     Pila temperaturas;
     inicpila(&temperaturas);
 
@@ -62,6 +68,7 @@ void menu(){
                 }else{
                     printf("\n La pila esta vacia");
                 }
+                break;
             case 52:
                 dato = ingresoDato();
                 existe = buscaElementoEnPila(temperaturas, dato);
@@ -72,10 +79,25 @@ void menu(){
                 }
                 break;
             case 53:
+                    cont = cuentaElementosPila(temperaturas);
+                    printf("La pila tiene %d elementos", cont);
+                break;
+            case 54:
+                    total = sumaElementosPila(temperaturas);
+                    printf("La suma de los elementos de la pila es: %d", total);
+                break;
+            case 55:
+                    printf("Los elementos de la pila antes de eliminar el menor son: ");
+                    muestraPila(temperaturas);
+                    menor = eliminaMenorElementoPila(&temperaturas);
+                    printf("Los elementos de la pila son: ");
+                    muestraPila(temperaturas);
+                    printf("\nEl menor elemento de la pila es: %d", menor);
                 break;
             case 56:
                 muestraTablaAscii();
         }
+        printf("\n");
         system("pause");
     }while(opcion!=27);
 
@@ -137,6 +159,17 @@ int randomRango(int min, int max){
     return rand()%(max-min)+min;
 }
 
+/********************************************//**
+ *
+ * \brief carga pila random
+ *
+ * \param puntero a pila
+ * \param cantidad de datos a cargar
+ * \param numero minimo
+ * \param numero maximo
+ * \return
+ *
+ ***********************************************/
 void cargaPilaRandomRango(Pila* p, int cant, int min, int max){
     int contador = 0;
     while(contador < cant){
@@ -178,7 +211,7 @@ int sumaElementosPila(Pila p){
 }
 
 int buscaElementoEnPila(Pila p, int dato){
-    int flag = 0;
+    short int flag = 0;
     Pila aux;
     inicpila(&aux);
 
@@ -191,6 +224,35 @@ int buscaElementoEnPila(Pila p, int dato){
     }
 
     return flag;
+}
+
+int eliminaMenorElementoPila(Pila* p){
+    int menor;
+    Pila aux;
+    inicpila(&aux);
+
+    if(!pilavacia(p)){
+        menor=desapilar(p);
+    }
+
+    while(!pilavacia(p)){
+        if(tope(p)<menor){
+            apilar(&aux, menor);
+            menor = desapilar(p);
+        }else{
+            apilar(&aux, desapilar(p));
+        }
+    }
+    pasaPila(&aux, p);
+
+    return menor;
+}
+
+void ordenaPilaPorSeleccion(Pila* origen, Pila* ordenada){
+    int algo=0;
+    while(!pilavacia(origen)){
+        apilar(ordenada, eliminaMenorElementoPila(origen));
+    }
 }
 
 int ingresoDato(){

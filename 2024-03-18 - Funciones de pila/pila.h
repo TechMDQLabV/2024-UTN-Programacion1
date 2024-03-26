@@ -8,6 +8,14 @@ struct _Pila
     int *valores;
     int postope;
 };
+/********************************************//**
+ * \brief inicializa la pila
+ *
+ * \param puntero a pila
+ * \param
+ * \return
+ *
+ ***********************************************/
 
 void inicpila(P_Pila p);
 void apilar(P_Pila p, int dato);
