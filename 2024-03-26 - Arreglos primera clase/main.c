@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <conio.h>
+#include "pila.h"
 
 #define DIM 100
 #define ESC 27
@@ -14,6 +15,8 @@ int cargaArreglo(int a[], int dim, int v, char label[]);
 int main()
 {
     srand(time(NULL));
+    Pila algo;
+    inicpila(&algo);
 
     int notas[DIM];
     int validosNotas = 0;
@@ -65,10 +68,12 @@ int cuentaDigitos(int nro){
 
 int cargaArreglo(int a[], int dim, int v, char label[]){
     char opcion;
+    int nro;
 
     while(v<dim && opcion != ESC){
         printf("%s",label);
-        scanf("%d",&a[v]);
+        scanf("%d",&nro);
+        a[v]=nro;
         v++;
 
         printf("ESC para salir o cualquier tecla para continuar...");
@@ -77,4 +82,31 @@ int cargaArreglo(int a[], int dim, int v, char label[]){
     }
 
     return v;
+}
+
+void arreglo2pilaWhile(int a[], int v, Pila* p){
+    int i=0;
+    while(i<v && i<50){
+        if(a[i]%2==0){
+            apilar(p, a[i]);
+        }
+        i++;
+    }
+}
+
+/** \brief Copiamos datos de una arreglo en una pila
+ * sin verificar que no se pase de la dimension de la pila
+ *
+ * \param El arreglo
+ * \param sus validos
+ * \param Puntero a pila
+ * \return
+ *
+ */
+void arreglo2pilaFor(int a[], int v, Pila* p){
+    for(int i=0;i<v;i++){
+        if(a[i]%2==0){
+            apilar(p, a[i]);
+        }
+    }
 }
