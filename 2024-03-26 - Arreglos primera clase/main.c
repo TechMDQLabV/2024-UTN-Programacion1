@@ -11,10 +11,19 @@ int cargaArregloRandom(int a[], int dim);
 void muestraArreglo(int a[], int v);
 int cuentaDigitos(int nro);
 int cargaArreglo(int a[], int dim, int v, char label[]);
+int esCapicua(int a[], int v);
+void invierteArregloInt(int a[], int v);
+void intercambio(int *a, int *b);
 
 int main()
 {
     srand(time(NULL));
+
+    char letras[]={'a','b','c','d'};
+    char salludo[]="Hello World";
+
+    printf("Letras: %s", letras);
+
     Pila algo;
     inicpila(&algo);
 
@@ -34,6 +43,8 @@ int main()
     printf("\n El nro 0 tiene %d digitos", cuentaDigitos(0));
     printf("\n El nro 1999 tiene %d digitos", cuentaDigitos(1999));
     printf("\n El nro 3000000 tiene %d digitos", cuentaDigitos(3000000));
+
+
     return 0;
 }
 
@@ -56,7 +67,7 @@ void muestraArreglo(int a[], int v){
 
 int cuentaDigitos(int nro){
     int digitos = 0;
-    if(nro=0){
+    if(nro==0){
         digitos = 1;
     }
     while(nro > 0){
@@ -109,4 +120,37 @@ void arreglo2pilaFor(int a[], int v, Pila* p){
             apilar(p, a[i]);
         }
     }
+}
+
+int esCapicua(int a[], int v){
+    int flag = 1;
+    int inicio = 0;
+    int fin = v - 1;
+
+    while(inicio < fin && flag == 1){
+        if(a[inicio] == a[fin]){
+            inicio++;
+            fin--;
+        }else{
+            flag = 0;
+        }
+
+    }
+    return flag;
+}
+
+void invierteArregloInt(int a[], int v){
+    int inicio = 0;
+    int fin = v - 1;
+    while(inicio < fin){
+        intercambio(&a[inicio], &a[fin]);
+        inicio++;
+        fin--;
+    }
+}
+
+void intercambio(int *a, int *b){
+    int aux = *a;
+    *a = *b;
+    *b = aux;
 }

@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1459330696 source:c:\developer\c\0 utn repositorios\2024-utn-programacion1\2024-03-26 - arreglos primera clase\pila.c
+	"pila.h"
+
+1238076008 c:\developer\c\0 utn repositorios\2024-utn-programacion1\2024-03-26 - arreglos primera clase\pila.h
+	<stdio.h>
+	<malloc.h>
+
