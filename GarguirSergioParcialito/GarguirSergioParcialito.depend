@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1459330696 source:c:\developer\c\0 utn repositorios\2024-utn-programacion1\garguirsergioparcialito\pila.c
+	"pila.h"
+
+1711215991 c:\developer\c\0 utn repositorios\2024-utn-programacion1\garguirsergioparcialito\pila.h
+	<stdio.h>
+	<malloc.h>
+
