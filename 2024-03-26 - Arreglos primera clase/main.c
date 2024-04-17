@@ -6,7 +6,7 @@
 #include "pila.h"
 
 #define DIM 100
-#define SDIM 3
+#define SDIM 30
 #define ESC 27
 
 int cargaArregloRandom(int a[], int dim);
@@ -24,11 +24,21 @@ int main()
     srand(time(NULL));
     char nombres[DIM][SDIM];
     int vNombres = 0;
+    int posMenor;
 
     vNombres = cargaArregloString(SDIM, nombres, vNombres, DIM, "Ingrese un nombre: ");
     printf("\n <<<<< Listado de Nombres >>>>>\n");
     muestraArregloString(SDIM, nombres, vNombres);
 
+    ordenaArregloStrSel(SDIM, nombres, vNombres);
+
+    printf("\n <<<<< Listado de Nombres >>>>>\n");
+    muestraArregloString(SDIM, nombres, vNombres);
+
+    posMenor = buscaPosMenorArregloString(SDIM, nombres, vNombres);
+    if(posMenor>-1){
+        printf("\n Menor: %s", nombres[posMenor]);
+    }
     int filas=10;
     int columnas=8;
     int matriz[filas][columnas];
@@ -239,7 +249,10 @@ int cargaArregloString(int d, char a[][d], int v, int dim, char label[]){
 }
 
 int buscaPosMenorArregloString(int d, char a[][d], int v){
-    int posMenor = 0;
+    int posMenor = -1;
+    if(v>0){
+        posMenor=0;
+    }
     for(int i=1;i<v;i++){
         if(strcmp(a[i],a[posMenor])<0){
             posMenor = i;
@@ -259,4 +272,31 @@ int buscoStringEnArreglo(int d, char a[][d], int v, char dato[]){
         }
     }
     return flag;
+}
+
+void intercambioStrings(char s1[], char s2[]){
+    char aux[100];
+    strcpy(aux, s1);
+    strcpy(s1, s2);
+    strcpy(s2, aux);
+}
+
+/// Busca la posicion del menor elemento en el arreglo
+/// para se usada en la funcion de ordenacion por seleccion
+int buscaPosMenorArregloStringOrd(int d, char a[][d], int v, int c){
+    int posMenor = c;
+    for(int i=c+1;i<v;i++){
+        if(strcmp(a[i],a[posMenor])<0){
+            posMenor = i;
+        }
+    }
+    return posMenor;
+}
+
+void ordenaArregloStrSel(int d, char a[][d], int v){
+    int posMenor;
+    for(int i=0;i<v-1;i++){
+        posMenor = buscaPosMenorArregloStringOrd(d, a, v, i);
+        intercambioStrings(a[i],a[posMenor]);
+    }
 }
