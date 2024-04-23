@@ -16,11 +16,16 @@ int cargaArreglo(int a[], int dim, int v, char label[]);
 int esCapicua(int a[], int v);
 void invierteArregloInt(int a[], int v);
 void intercambio(int *a, int *b);
-
-
+void insertaOrdenado(int d, char a[][d], int v, char dato[]);
+void ordenaPorInsercion(int d, char a[][d], int v);
 
 int main()
 {
+    int numeros[100];
+    int vNumeros=0;
+    vNumeros=cargaArregloRandom(numeros, 100);
+    ordenaPorInsercionInt(numeros, vNumeros);
+    muestraArreglo(numeros, vNumeros);
     srand(time(NULL));
     char nombres[DIM][SDIM];
     int vNombres = 0;
@@ -30,7 +35,8 @@ int main()
     printf("\n <<<<< Listado de Nombres >>>>>\n");
     muestraArregloString(SDIM, nombres, vNombres);
 
-    ordenaArregloStrSel(SDIM, nombres, vNombres);
+    //ordenaArregloStrSel(SDIM, nombres, vNombres);
+    ordenaPorInsercion(SDIM, nombres, vNombres);
 
     printf("\n <<<<< Listado de Nombres >>>>>\n");
     muestraArregloString(SDIM, nombres, vNombres);
@@ -298,5 +304,38 @@ void ordenaArregloStrSel(int d, char a[][d], int v){
     for(int i=0;i<v-1;i++){
         posMenor = buscaPosMenorArregloStringOrd(d, a, v, i);
         intercambioStrings(a[i],a[posMenor]);
+    }
+}
+/// Funcion para ser usada con el algoritmo de insercion
+void insertaOrdenado(int d, char a[][d], int v, char dato[]){
+    int i = v;
+    while(i >= 0 && strcmp(dato, a[i])<0){
+        strcpy(a[i+1], a[i]);
+        i--;
+    }
+    strcpy(a[i+1], dato);
+}
+
+void ordenaPorInsercion(int d, char a[][d], int v){
+    muestraArregloString(d, a, v);
+    for(int i=0; i<v-1 ;i++){
+        printf("%d - %s", i, a[i]);
+        insertaOrdenado(d, a, i, a[i+1]);
+    }
+}
+
+/// Funcion para ser usada con el algoritmo de insercion
+void insertaOrdenadoInt(int a[], int v, int dato){
+    int i = v;
+    while(i >= 0 && dato < a[i]){
+        a[i+1] = a[i];
+        i--;
+    }
+    a[i+1] = dato;
+}
+
+void ordenaPorInsercionInt(int a[], int v){
+    for(int i=0;i<v-1;i++){
+        insertaOrdenadoInt(a, i, a[i+1]);
     }
 }
