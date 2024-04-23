@@ -317,10 +317,10 @@ void insertaOrdenado(int d, char a[][d], int v, char dato[]){
 }
 
 void ordenaPorInsercion(int d, char a[][d], int v){
-    muestraArregloString(d, a, v);
+    char stringAux[d];
     for(int i=0; i<v-1 ;i++){
-        printf("%d - %s", i, a[i]);
-        insertaOrdenado(d, a, i, a[i+1]);
+        strcpy(stringAux, a[i+1]);
+        insertaOrdenado(d, a, i, stringAux);
     }
 }
 
