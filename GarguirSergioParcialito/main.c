@@ -139,3 +139,14 @@ void muestraPila(Pila p){
         cont++;
     }
 }
+
+void muestraPila(Pila p){
+    int cont = 0;
+    while(!pilavacia(&p)){
+        if(cont%15==0){
+            printf("\n");
+        }
+        printf(" %d ", desapilar(&p));
+        cont++;
+    }
+}
