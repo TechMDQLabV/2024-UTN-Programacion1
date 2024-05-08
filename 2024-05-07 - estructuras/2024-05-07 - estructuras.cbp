@@ -31,9 +31,17 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="almuno.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="alumno.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="mock.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="mock.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

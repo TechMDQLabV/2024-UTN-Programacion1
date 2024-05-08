@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <conio.h>
+#include <time.h>
 #include "alumno.h"
+#include "mock.h"
 
 typedef struct{
     char calle[30];
@@ -21,13 +23,15 @@ stAlumno buscaMenorApellido(stAlumno a[], int v);
 
 int main()
 {
+    srand(time(NULL));
     stAlumno alumnos[DIM];
     int vAlumnos = 0;
+
     stAlumno alumnoMenor;
 
-    vAlumnos = cargaAlumnos(alumnos, vAlumnos, DIM);
-
-    printf("\n Listado de Alumnos \n");
+   // vAlumnos = cargaAlumnos(alumnos, vAlumnos, DIM);
+    vAlumnos = mockArreglo(alumnos);
+    printf("\n Listado de Alumnos %d - %d\n", sizeof(stAlumno), sizeof(alumnos));
     muestraAlumnos(alumnos, vAlumnos);
 
     alumnoMenor = buscaMenorApellido(alumnos, vAlumnos);
@@ -100,4 +104,17 @@ stAlumno buscaMenorApellido(stAlumno a[], int v){
     }
 
     return alumnoMenor;
+}
+
+int mockArreglo(stAlumno a[]){
+    int i;
+    for(i=0;i<50;i++){
+        a[i].legajo = getFileNumber();
+        a[i].diaNac = getDay();
+        a[i].mesNac = getMonth();
+        a[i].anioNac = getYear();
+        getName(a[i].nombre);
+        getLastName(a[i].apellido);
+    }
+    return i;
 }
