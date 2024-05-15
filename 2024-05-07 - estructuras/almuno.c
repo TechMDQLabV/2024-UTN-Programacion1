@@ -28,4 +28,5 @@ void muestraUnAlumno(stAlumno a){
     printf("\n Nombre................: %s", a.nombre);
     printf("\n Apellido..............: %s", a.apellido);
     printf("\n Fecha de nacimiento...: %d/%d/%d", a.diaNac, a.mesNac, a.anioNac);
+    printf("\n=================================================\n");
 }

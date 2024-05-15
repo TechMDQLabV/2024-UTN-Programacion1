@@ -16,14 +16,21 @@ typedef struct{
 
 
 #define DIM 100
+#define AR_ALUMNOS "alumnos.dat"
 
 int cargaAlumnos(stAlumno a[], int v, int dim);
 void muestraAlumnos(stAlumno a[], int v);
 stAlumno buscaMenorLegajo(stAlumno a[], int v);
 stAlumno buscaMenorApellido(stAlumno a[], int v);
+void cargaArchAlumnosRandom(char nombreArchivo[], int cant);
+void muestraArchivoAlumnos(char nombreArchivo[]);
 
 int main()
 {
+    cargaArchAlumnosRandom(AR_ALUMNOS, 10);
+    printf("\n Listado de Alumnos del archivo \n");
+    muestraArchivoAlumnos(AR_ALUMNOS);
+
     PilaAlumnos p;
     inicpila(&p);
 
@@ -74,7 +81,6 @@ int cargaAlumnos(stAlumno a[], int v, int dim){
 void muestraAlumnos(stAlumno a[], int v){
     for(int i=0;i<v;i++){
         muestraUnAlumno(a[i]);
-        printf("\n=================================================\n");
     }
 }
 
@@ -122,3 +128,27 @@ int mockArreglo(stAlumno a[]){
     return i;
 }
 
+void cargaArchAlumnosRandom(char nombreArchivo[], int cant){
+    FILE* archi = fopen(nombreArchivo, "ab");
+    stAlumno alumno;
+    int i = 0;
+    if(archi){
+        while(i<cant){
+            alumno = getAlumnoRandom();
+            fwrite(&alumno, sizeof(stAlumno), 1, archi);
+            i++;
+        }
+        fclose(archi);
+    }
+}
+
+void muestraArchivoAlumnos(char nombreArchivo[]){
+    stAlumno alumno;
+    FILE* archi = fopen(nombreArchivo, "rb");
+    if(archi){
+        while(fread(&alumno, sizeof(stAlumno), 1, archi)>0){
+            muestraUnAlumno(alumno);
+        }
+        fclose(archi);
+    }
+}
