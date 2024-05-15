@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "alumno.h"
 
 int getFileNumber(){
     return (rand()%900)+100;
@@ -15,7 +16,7 @@ int getMonth(){
 }
 
 int getYear(){
-    return (rand()%915)+1000;
+    return (rand()%90)+1930;
 }
 
 void getName(char name[]){
@@ -32,4 +33,27 @@ void getLastName(char lastName[]){
                             "De Antonio", "Ramirez", "Spinetta", "Cortez", "Gonzalez", "Andujar", "San Juan", "Bautista", "Anchorena", "Paso",
                             "Gaboto","Vega","Vargas","Lloret","Linares","Suarez","Sierra","Amenabar","Blanco","White","Black"};
     strcpy(lastName, lastNames[rand()%(sizeof(lastNames)/30)]);
+}
+
+char* getNamePro(){
+    char* name = (char*) malloc(sizeof(char)*30);
+    char names[][30]={"Juan","Apolonio","Tulio","Maria","Violeta","Amalio","Juan","Roberto","Antonio","Pedro","Fernando","Jacinto","Anibal","Antonio","Atalayo",
+                           "Bertino","Anastasio","Amor","Arturo","Diego","Mario","Tamaro","Adolfo","Alfonso","Pedro","Alfredo",
+                           "Rolando","Mauro","Amancio","Benicio","Bertin","Ildefonso","Amilcar","Cuchuflito","Jazmino",
+                           "Remilgo"};
+    strcpy(name,names[rand()%(sizeof(names)/30)]);
+    return name;
+}
+
+stAlumno getAlumnoRandom(){
+    stAlumno a;
+    a.legajo = getFileNumber();
+    a.diaNac = getDay();
+    a.mesNac = getMonth();
+    a.anioNac = getYear();
+    getName(a.nombre);
+    strcpy(a.nombre,getNamePro());
+    getLastName(a.apellido);
+
+    return a;
 }

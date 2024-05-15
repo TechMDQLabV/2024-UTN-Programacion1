@@ -7,19 +7,29 @@
 
 1715121447 c:\developer\c\0 utn repositorios\2024-utn-programacion1\2024-05-07 - estructuras\alumno.h
 
-1715205645 source:c:\developer\c\0 utn repositorios\2024-utn-programacion1\2024-05-07 - estructuras\main.c
+1715730959 source:c:\developer\c\0 utn repositorios\2024-utn-programacion1\2024-05-07 - estructuras\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<conio.h>
 	<time.h>
+	"pilaAlumnos.h"
 	"alumno.h"
 	"mock.h"
 
-1715204197 c:\developer\c\0 utn repositorios\2024-utn-programacion1\2024-05-07 - estructuras\mock.h
+1715729616 c:\developer\c\0 utn repositorios\2024-utn-programacion1\2024-05-07 - estructuras\mock.h
 
-1715204909 source:c:\developer\c\0 utn repositorios\2024-utn-programacion1\2024-05-07 - estructuras\mock.c
+1715729677 source:c:\developer\c\0 utn repositorios\2024-utn-programacion1\2024-05-07 - estructuras\mock.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
+	"alumno.h"
+
+1715730949 source:c:\developer\c\0 utn repositorios\2024-utn-programacion1\2024-05-07 - estructuras\pilaalumnos.c
+	<malloc.h>
+	"pilaAlumnos.h"
+	"mock.h"
+
+1715730854 c:\developer\c\0 utn repositorios\2024-utn-programacion1\2024-05-07 - estructuras\pilaalumnos.h
+	"alumno.h"
 

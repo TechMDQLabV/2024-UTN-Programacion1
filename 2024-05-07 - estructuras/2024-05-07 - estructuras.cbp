@@ -42,6 +42,11 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="mock.h" />
+		<Unit filename="pila..h" />
+		<Unit filename="pilaAlumnos.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="pilaAlumnos.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

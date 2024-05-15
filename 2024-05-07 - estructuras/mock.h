@@ -7,5 +7,7 @@ int getMonth();
 int getYear();
 void getName(char name[]);
 void getLastName(char lastName[]);
+stAlumno getAlumnoRandom();
 
 #endif // MOCK_H_INCLUDED
+

@@ -3,6 +3,7 @@
 #include <string.h>
 #include <conio.h>
 #include <time.h>
+#include "pilaAlumnos.h"
 #include "alumno.h"
 #include "mock.h"
 
@@ -23,6 +24,13 @@ stAlumno buscaMenorApellido(stAlumno a[], int v);
 
 int main()
 {
+    PilaAlumnos p;
+    inicpila(&p);
+
+    cargaPilaAlumnosRandom(&p);
+    printf("\n Listado de Alumnos de la Pila \n");
+    muestraPilaAlumnos(&p);
+
     srand(time(NULL));
     stAlumno alumnos[DIM];
     int vAlumnos = 0;
@@ -31,7 +39,7 @@ int main()
 
    // vAlumnos = cargaAlumnos(alumnos, vAlumnos, DIM);
     vAlumnos = mockArreglo(alumnos);
-    printf("\n Listado de Alumnos %d - %d\n", sizeof(stAlumno), sizeof(alumnos));
+    printf("\n Listado de Alumnos %d - %d - vAlumnos: %d - %d\n", sizeof(stAlumno), sizeof(alumnos), vAlumnos, (vAlumnos==8));
     muestraAlumnos(alumnos, vAlumnos);
 
     alumnoMenor = buscaMenorApellido(alumnos, vAlumnos);
@@ -108,13 +116,9 @@ stAlumno buscaMenorApellido(stAlumno a[], int v){
 
 int mockArreglo(stAlumno a[]){
     int i;
-    for(i=0;i<50;i++){
-        a[i].legajo = getFileNumber();
-        a[i].diaNac = getDay();
-        a[i].mesNac = getMonth();
-        a[i].anioNac = getYear();
-        getName(a[i].nombre);
-        getLastName(a[i].apellido);
+    for(i=0;i<10;i++){
+        a[i] = getAlumnoRandom();
     }
     return i;
 }
+
