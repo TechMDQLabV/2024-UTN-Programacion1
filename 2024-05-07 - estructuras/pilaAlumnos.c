@@ -53,6 +53,5 @@ void cargaPilaAlumnosRandom(PilaAlumnos *p){
 void muestraPilaAlumnos(PilaAlumnos *p){
     for(int i=0;i<p->v;i++){
         muestraUnAlumno(p->a[i]);
-        printf("\n=================================================\n");
     }
 }

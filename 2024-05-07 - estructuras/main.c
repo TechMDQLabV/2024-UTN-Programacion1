@@ -24,17 +24,19 @@ stAlumno buscaMenorLegajo(stAlumno a[], int v);
 stAlumno buscaMenorApellido(stAlumno a[], int v);
 void cargaArchAlumnosRandom(char nombreArchivo[], int cant);
 void muestraArchivoAlumnos(char nombreArchivo[]);
+stAlumno buscaAlumnoPorLegajo(char nombreArchivo[], int legajo);
 
 int main()
 {
+    srand(time(NULL));
     cargaArchAlumnosRandom(AR_ALUMNOS, 10);
-    printf("\n Listado de Alumnos del archivo \n");
+    printf("\n Listado de Alumnos del archivo | cant: %d\n", cuentaRegistrosArchivo(AR_ALUMNOS, sizeof(stAlumno)));
     muestraArchivoAlumnos(AR_ALUMNOS);
 
     PilaAlumnos p;
     inicpila(&p);
 
-    cargaPilaAlumnosRandom(&p);
+   // cargaPilaAlumnosRandom(&p);
     printf("\n Listado de Alumnos de la Pila \n");
     muestraPilaAlumnos(&p);
 
@@ -130,13 +132,15 @@ int mockArreglo(stAlumno a[]){
 
 void cargaArchAlumnosRandom(char nombreArchivo[], int cant){
     FILE* archi = fopen(nombreArchivo, "ab");
-    stAlumno alumno;
+    stAlumno alumno, aBuscar;
     int i = 0;
     if(archi){
         while(i<cant){
             alumno = getAlumnoRandom();
-            fwrite(&alumno, sizeof(stAlumno), 1, archi);
-            i++;
+            if(buscaAlumnoPorLegajo(nombreArchivo,alumno.legajo).legajo!=alumno.legajo){
+                fwrite(&alumno, sizeof(stAlumno), 1, archi);
+                i++;
+            }
         }
         fclose(archi);
     }
@@ -149,6 +153,83 @@ void muestraArchivoAlumnos(char nombreArchivo[]){
         while(fread(&alumno, sizeof(stAlumno), 1, archi)>0){
             muestraUnAlumno(alumno);
         }
+        fclose(archi);
+    }
+}
+
+stAlumno buscaAlumnoPorLegajo(char nombreArchivo[], int legajo){
+    stAlumno a;
+    a.legajo = -1;
+    int flag = 0;
+    FILE* archi = fopen(nombreArchivo, "rb");
+    if(archi){
+        while(flag == 0 && fread(&a, sizeof(stAlumno), 1, archi)>0){
+            if(a.legajo == legajo){
+                flag = 1;
+            }
+        }
+        fclose(archi);
+    }
+    return a;
+}
+
+int cuentaRegistrosArchivo(char nombreArchivo[], int tamEstructura){
+    FILE* archi = fopen(nombreArchivo, "rb");
+    int total = 0;
+    if(archi){
+        fseek(archi,0,SEEK_END);
+        total = ftell(archi)/tamEstructura;
+        fclose(archi);
+    }
+    return total;
+}
+
+int archivo2arreglo(char nombreArchivo[], stAlumno a[], int v, int dim){
+    FILE* archi = fopen(nombreArchivo, "rb");
+    if(archi){
+        while(v<dim && fread(&a[v],sizeof(stAlumno),1,archi)>0){
+            v++;
+        }
+        fclose(archi);
+    }
+    return v;
+}
+
+int archivoCompleto2arreglo(char nombreArchivo[], stAlumno a[], int dim){
+    FILE* archi = fopen(nombreArchivo, "rb");
+    int v = cuentaRegistrosArchivo(nombreArchivo, sizeof(stAlumno));
+    if(archi){
+        if(v<dim){
+            fread(a, sizeof(stAlumno), v, archi);
+        }else{
+            v=0;
+        }
+        fclose(archi);
+    }
+    return v;
+}
+
+void archivo2pila(char nombreArchivo[], PilaAlumnos* p){
+    FILE* archi = fopen(nombreArchivo, "rb");
+    stAlumno a;
+    if(archi){
+        while(fread(&a, sizeof(stAlumno), 1, archi)>0){
+            if(a.legajo%2==0)
+                apilar(p, a);
+        }
+        fclose(archi);
+    }
+}
+
+void pila2archivo(PilaAlumnos p, char nombreArchivo[]){
+    FILE* archi = fopen(nombreArchivo, "ab");
+    stAlumno a;
+    if(archi){
+        while(!pilaVacia(&p)){
+            a = desapilar(&p);
+            fwrite(&a,sizeof(stAlumno),1,archi);
+        }
+
         fclose(archi);
     }
 }

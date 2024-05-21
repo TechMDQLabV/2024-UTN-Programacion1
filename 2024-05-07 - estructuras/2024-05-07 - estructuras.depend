@@ -7,7 +7,7 @@
 
 1715121447 c:\developer\c\0 utn repositorios\2024-utn-programacion1\2024-05-07 - estructuras\alumno.h
 
-1715812754 source:c:\developer\c\0 utn repositorios\2024-utn-programacion1\2024-05-07 - estructuras\main.c
+1716325574 source:c:\developer\c\0 utn repositorios\2024-utn-programacion1\2024-05-07 - estructuras\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -19,13 +19,13 @@
 
 1715729616 c:\developer\c\0 utn repositorios\2024-utn-programacion1\2024-05-07 - estructuras\mock.h
 
-1715729677 source:c:\developer\c\0 utn repositorios\2024-utn-programacion1\2024-05-07 - estructuras\mock.c
+1716251102 source:c:\developer\c\0 utn repositorios\2024-utn-programacion1\2024-05-07 - estructuras\mock.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"alumno.h"
 
-1715730949 source:c:\developer\c\0 utn repositorios\2024-utn-programacion1\2024-05-07 - estructuras\pilaalumnos.c
+1715817991 source:c:\developer\c\0 utn repositorios\2024-utn-programacion1\2024-05-07 - estructuras\pilaalumnos.c
 	<malloc.h>
 	"pilaAlumnos.h"
 	"mock.h"

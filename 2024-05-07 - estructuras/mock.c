@@ -4,7 +4,7 @@
 #include "alumno.h"
 
 int getFileNumber(){
-    return (rand()%900)+100;
+    return (rand()%9000)+100;
 }
 
 int getDay(){
