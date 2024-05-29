@@ -269,3 +269,60 @@ void pila2archivo(PilaAlumnos p, char nombreArchivo[]){
         fclose(archi);
     }
 }
+
+int factorial(int x){
+    int rta;
+    if(x==0){
+        rta=1;
+    }else{
+
+        rta=x*factorial(x-1);
+
+    }
+
+    return rta;
+}
+
+int factorial1(int x){
+    int rta=1;
+    if(x>0){
+        rta=x*factorial1(x-1);
+    }
+
+    return rta;
+}
+
+int factorialT(int x){
+    return (x>0)?x*factorialT(x-1):1;
+}
+
+int sumaArreglo(int a[], int v, int i){
+    int suma;
+    if(i==v-1){
+        suma = a[i];
+    }else{
+        suma = a[i] + sumaArreglo(a, v, i+1);
+    }
+
+    return suma;
+}
+
+int sumaArregloImp(int a[], int v, int i){
+    int suma=0;
+    if(i<v){
+        suma = a[i] + sumaArreglo(a, v, i+1);
+    }
+
+    return suma;
+}
+
+int sumaArregloTer(int a[], int v, int i){
+    return (i<v)?a[i]+sumaArregloTer(a, v, i+1):0;
+}
+
+void muestraArreglo(int a[], int v, int i){
+    if(i<v){
+        printf("\n %d", a[i]);
+        muestraArreglo(a, v, i+1);
+    }
+}
