@@ -25,13 +25,22 @@ stAlumno buscaMenorApellido(stAlumno a[], int v);
 void cargaArchAlumnosRandom(char nombreArchivo[], int cant);
 void muestraArchivoAlumnos(char nombreArchivo[]);
 stAlumno buscaAlumnoPorLegajo(char nombreArchivo[], int legajo);
+stAlumno* buscaAlumnoPorLegajoPuntero(char nombreArchivo[], int legajo);
+stAlumno* archivoCompleto2arregloP(char nombreArchivo[], int* v);
 
 int main()
 {
     srand(time(NULL));
-    cargaArchAlumnosRandom(AR_ALUMNOS, 10);
+    stAlumno* alumnoPuntero = NULL;
+    //cargaArchAlumnosRandom(AR_ALUMNOS, 10);
     printf("\n Listado de Alumnos del archivo | cant: %d\n", cuentaRegistrosArchivo(AR_ALUMNOS, sizeof(stAlumno)));
     muestraArchivoAlumnos(AR_ALUMNOS);
+
+    alumnoPuntero = buscaAlumnoPorLegajoPuntero(AR_ALUMNOS, 10);
+    if(alumnoPuntero)
+        muestraUnAlumno(*alumnoPuntero);
+    else
+        printf("\nEl legajo no existe");
 
     PilaAlumnos p;
     inicpila(&p);
@@ -173,6 +182,22 @@ stAlumno buscaAlumnoPorLegajo(char nombreArchivo[], int legajo){
     return a;
 }
 
+stAlumno* buscaAlumnoPorLegajoPuntero(char nombreArchivo[], int legajo){
+    stAlumno* a = NULL;
+    stAlumno alumno;
+    FILE* archi = fopen(nombreArchivo, "rb");
+    if(archi){
+        while(a==NULL && fread(&alumno,sizeof(stAlumno),1,archi)>0){
+            if(alumno.legajo == legajo){
+                a = &alumno;
+            }
+        }
+        fclose(archi);
+    }
+
+    return a;
+}
+
 int cuentaRegistrosArchivo(char nombreArchivo[], int tamEstructura){
     FILE* archi = fopen(nombreArchivo, "rb");
     int total = 0;
@@ -207,6 +232,17 @@ int archivoCompleto2arreglo(char nombreArchivo[], stAlumno a[], int dim){
         fclose(archi);
     }
     return v;
+}
+
+stAlumno* archivoCompleto2arregloP(char nombreArchivo[], int* v){
+    FILE* archi = fopen(nombreArchivo, "rb");
+    *v = cuentaRegistrosArchivo(nombreArchivo, sizeof(stAlumno));
+    stAlumno* a = (stAlumno*) malloc(sizeof(stAlumno)*(*v));
+    if(archi){
+        fread(a, sizeof(stAlumno), *v, archi);
+        fclose(archi);
+    }
+    return a;
 }
 
 void archivo2pila(char nombreArchivo[], PilaAlumnos* p){

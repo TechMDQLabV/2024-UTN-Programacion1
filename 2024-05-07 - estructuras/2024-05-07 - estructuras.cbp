@@ -31,7 +31,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="almuno.c">
+		<Unit filename="alumno.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="alumno.h" />
