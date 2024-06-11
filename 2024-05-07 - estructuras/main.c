@@ -27,27 +27,29 @@ void muestraArchivoAlumnos(char nombreArchivo[]);
 stAlumno buscaAlumnoPorLegajo(char nombreArchivo[], int legajo);
 stAlumno* buscaAlumnoPorLegajoPuntero(char nombreArchivo[], int legajo);
 stAlumno* archivoCompleto2arregloP(char nombreArchivo[], int* v);
+void muestraArregloAlumnos(stAlumno a[], int v, int i);
+
 
 int main()
 {
     srand(time(NULL));
-    stAlumno* alumnoPuntero = NULL;
+    //stAlumno* alumnoPuntero = NULL;
     //cargaArchAlumnosRandom(AR_ALUMNOS, 10);
-    printf("\n Listado de Alumnos del archivo | cant: %d\n", cuentaRegistrosArchivo(AR_ALUMNOS, sizeof(stAlumno)));
-    muestraArchivoAlumnos(AR_ALUMNOS);
+    //printf("\n Listado de Alumnos del archivo | cant: %d\n", cuentaRegistrosArchivo(AR_ALUMNOS, sizeof(stAlumno)));
+    //muestraArchivoAlumnos(AR_ALUMNOS);
 
-    alumnoPuntero = buscaAlumnoPorLegajoPuntero(AR_ALUMNOS, 10);
-    if(alumnoPuntero)
+    //alumnoPuntero = buscaAlumnoPorLegajoPuntero(AR_ALUMNOS, 10);
+    /*if(alumnoPuntero)
         muestraUnAlumno(*alumnoPuntero);
     else
         printf("\nEl legajo no existe");
 
     PilaAlumnos p;
     inicpila(&p);
-
+*/
    // cargaPilaAlumnosRandom(&p);
-    printf("\n Listado de Alumnos de la Pila \n");
-    muestraPilaAlumnos(&p);
+ //   printf("\n Listado de Alumnos de la Pila \n");
+ //   muestraPilaAlumnos(&p);
 
     srand(time(NULL));
     stAlumno alumnos[DIM];
@@ -55,10 +57,12 @@ int main()
 
     stAlumno alumnoMenor;
 
-   // vAlumnos = cargaAlumnos(alumnos, vAlumnos, DIM);
-    vAlumnos = mockArreglo(alumnos);
+    vAlumnos = cargaAlumnos(alumnos, vAlumnos, DIM);
+    //vAlumnos = mockArreglo(alumnos);
     printf("\n Listado de Alumnos %d - %d - vAlumnos: %d - %d\n", sizeof(stAlumno), sizeof(alumnos), vAlumnos, (vAlumnos==8));
-    muestraAlumnos(alumnos, vAlumnos);
+    //muestraAlumnos(alumnos, vAlumnos);
+
+    muestraArregloAlumnos(alumnos, vAlumnos, 0);
 
     alumnoMenor = buscaMenorApellido(alumnos, vAlumnos);
     if(alumnoMenor.legajo > -1){
@@ -325,4 +329,97 @@ void muestraArreglo(int a[], int v, int i){
         printf("\n %d", a[i]);
         muestraArreglo(a, v, i+1);
     }
+}
+
+void muestraArregloAlumnos(stAlumno a[], int v, int i){
+    if(i<v){
+        muestraArregloAlumnos(a,v,i+1);
+        muestraUnAlumno(a[i]);
+    }
+}
+
+stAlumno buscaAlumnoPorLegajoRecursivo(stAlumno a[], int v, int i){
+    stAlumno menor;
+    if(i==v-1){
+       menor = a[i];
+    }else{
+        menor = buscaAlumnoPorLegajoRecursivo(a, v, i+1);
+        if(a[i].legajo < menor.legajo ){
+            menor = a[i];
+        }
+    }
+    return menor;
+}
+
+int buscaPosAlumno(char nombreArchivo[], int legajo){
+    stAlumno a;
+    int cont = 0;
+    int pos = -1;
+    FILE* archi = fopen(nombreArchivo, "rb");
+    if(archi){
+        while(pos == -1 && fread(&a, sizeof(stAlumno), 1, archi)>0){
+            if(a.legajo == legajo){
+                pos = cont;
+            }
+            cont++;
+        }
+
+        fclose(archi);
+    }
+    return pos;
+}
+
+int buscaPosAlumnoFtell(char nombreArchivo[], int legajo){
+    stAlumno a;
+    int pos = 0;
+    FILE* archi = fopen(nombreArchivo, "rb");
+    if(archi){
+        while(pos == 0 && fread(&a, sizeof(stAlumno), 1, archi)>0){
+            if(a.legajo == legajo){
+                pos = ftell(archi)/sizeof(stAlumno);
+            }
+        }
+
+        fclose(archi);
+    }
+    return pos;
+}
+
+void modificaAlumno(char nombreArchivo[], stAlumno alumno, int pos){
+    stAlumno a;
+
+    if(pos <= cuentaRegistrosArchivo(nombreArchivo, sizeof(stAlumno))){
+        FILE* archi = fopen(nombreArchivo, "r+b");
+        if(archi){
+            fseek(archi, pos * sizeof(stAlumno), 0);
+            fread(&a, sizeof(stAlumno), 1, archi);
+            a = editAlumno(a, alumno);
+            fseek(archi, -1 * sizeof(stAlumno), 1);
+            fwrite(&a, sizeof(stAlumno),1, archi);
+
+            fclose(archi);
+        }
+    }
+}
+
+stAlumno editAlumno(stAlumno origen, stAlumno nuevo){
+    if(nuevo.legajo != 0){
+        origen.legajo = nuevo.legajo;
+    }
+    if(strlen(nuevo.nombre)>0){
+        strcpy(origen.nombre, nuevo.nombre)
+    }
+    if(strlen(nuevo.apellido)>0){
+        strcpy(origen.apellido, nuevo.apellido)
+    }
+    if(nuevo.dia != 0){
+        origen.dia = nuevo.dia;
+    }
+    if(nuevo.mes != 0){
+        origen.mes = nuevo.mes;
+    }
+    if(nuevo.anio != 0){
+        origen.anio = nuevo.anio;
+    }
+    return origen;
 }
